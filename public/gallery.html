@@ -2,49 +2,754 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Shizuka Preview Gallery — Ultra-HD Highlights</title>
-    <meta name="description" content="High-definition preview galleries, 25s highlight clips, and secure verified media delivery.">
-    <link rel="stylesheet" href="/css/gallery.css">
-    <link rel="stylesheet" href="/css/luxury-theme.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>">
+    <title>SHIZUKA | Images</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+:root {
+            --gold: #8E793E;
+            --tg-blue: #0088cc;
+            --bg-color: #050505;
+            --dot-nudge-desktop: 18px;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            background-color: var(--bg-color) !important;
+            color: #ffffff; font-family: 'Inter', sans-serif;
+            overflow: hidden; height: 100vh;
+            display: flex; flex-direction: column;
+        }
+
+        #mandatory-section { display: none !important; }
+
+        header {
+            text-align: center; padding: 20px 0 10px;
+            letter-spacing: 0.8em; text-transform: uppercase;
+            color: var(--gold); font-size: 14px;
+            flex-shrink: 0; z-index: 200;
+        }
+
+        /* --- AD ARCHITECTURE --- */
+        .ad-pillar {
+            position: fixed; top: 158px; width: 300px; height: 600px;
+            background: #0a0a0a; border: 1px solid #1a1a1a;
+            display: flex; align-items: center; justify-content: center;
+            color: #222; z-index: 5; border-radius: 18px; font-size: 10px;
+            opacity: 0; animation: adEntrance 0.5s forwards; animation-delay: 1.2s;
+        }
+        .ad-left { left: 20px; }
+        .ad-right { right: 20px; }
+
+        .ad-container-720 {
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;
+            width: 100%; padding: 15px 0; z-index: 150; position: fixed; bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 1) 70%, transparent);
+            opacity: 0; animation: adEntrance 0.5s forwards; animation-delay: 1.2s;
+        }
+
+        .ad-720-unit {
+            width: 90%; max-width: 728px; height: 90px;
+            background: #0a0a0a; border: 1px solid #1a1a1a;
+            display: flex; align-items: center; justify-content: center; color: #333;
+        }
+
+        .mobile-only-ads {
+            display: none; flex-direction: column; align-items: center; gap: 20px;
+            width: 100%; padding: 20px 0 100px 0;
+        }
+
+        .ad-300-unit {
+            width: 300px; height: 250px; background: #0a0a0a; border: 1px solid #1a1a1a;
+            display: flex; align-items: center; justify-content: center; color: #333; border-radius: 8px;
+        }
+
+        /* --- VIEWER CORE --- */
+        .viewer-wrapper {
+            flex-grow: 1; display: flex; flex-direction: column;
+            justify-content: flex-start; align-items: center;
+            padding-top: 16px;
+            width: 100%; position: relative; overflow: visible; z-index: 10;
+        }
+
+                                #maskBox {
+            position: relative; width: 100%; height: auto; touch-action: none;
+            -webkit-mask-image: linear-gradient(to right, transparent 0, transparent 320px, black 355px, black calc(100% - 355px), transparent calc(100% - 320px), transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, transparent 320px, black 355px, black calc(100% - 355px), transparent calc(100% - 320px), transparent 100%);
+        }
+
+        .slider-track {
+            display: flex; align-items: center; position: absolute; left: 0; top: 0; height: 100%;
+            will-change: transform; cursor: grab; transition: transform 0.6s cubic-bezier(.23, 1, 0.32, 1);
+        }
+
+        .slide {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s cubic-bezier(.23, 1, 0.32, 1), opacity 0.4s ease;
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+        .slide img, .slide video {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 18px;
+            border: 1px solid rgba(142, 121, 62, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            pointer-events: none;
+            user-select: none;
+        }
+
+
+
+                /* --- REAL LOADING CIRCLE --- */
+        .ph-spinner-wrap {
+            position: relative; width: 68px; height: 68px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            overflow: visible;
+        }
+        .ph-circle-svg {
+            width: 100%; height: 100%; transform: rotate(-90deg);
+            overflow: visible !important;
+        }
+        .ph-circle-bg {
+            fill: none; stroke: rgba(142, 121, 62, 0.18); stroke-width: 3.5;
+        }
+        .ph-circle-bar {
+            fill: none; stroke: #d4af37; stroke-width: 3.5;
+            stroke-linecap: round; stroke-dasharray: 138.2; stroke-dashoffset: 138.2;
+            transition: stroke-dashoffset 0.15s ease-out;
+            filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.6));
+        }
+        .ph-percent {
+            position: absolute; font-size: 12px; font-weight: 700;
+            color: #fff275; letter-spacing: 0.5px; font-family: 'Inter', sans-serif;
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+        }
+
+        .img-placeholder {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 12px; pointer-events: auto;
+        }
+        .img-placeholder .ph-icon {
+            width: 48px; height: 48px; opacity: 0.15; pointer-events: none;
+        }
+        .img-placeholder .ph-text {
+            color: rgba(142, 121, 62, 0.5);
+            font-size: 12px; letter-spacing: 1.5px;
+            text-transform: uppercase; text-align: center;
+            line-height: 1.8; padding: 0 20px; pointer-events: none;
+        }
+        .img-placeholder .ph-refresh {
+            margin-top: 6px; padding: 8px 22px;
+            border: 1px solid rgba(142, 121, 62, 0.4);
+            border-radius: 20px; background: transparent;
+            color: rgba(142, 121, 62, 0.7); font-size: 11px;
+            letter-spacing: 1px; text-transform: uppercase;
+            cursor: pointer; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .img-placeholder .ph-refresh:hover {
+            background: rgba(142, 121, 62, 0.15);
+            border-color: rgba(142, 121, 62, 0.8);
+        }
+        .ph-ping-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: rgba(142,121,62,0.4); flex-shrink: 0;
+            transition: background 0.4s ease;
+        }
+        .ph-ping-dot.ok  { background: #4caf50; box-shadow: 0 0 5px #4caf5088; }
+        .ph-ping-dot.bad { background: #f44336; box-shadow: 0 0 5px #f4433688; }
+        .slide { position: relative; }
+
+        .nav-hub { position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; }
+        .dots { margin-top: var(--dot-nudge-desktop); display: flex; justify-content: center; gap: 10px; }
+        .dot { width: 25px; height: 2px; background: #1a1a1a; cursor: pointer; transition: 0.4s; }
+        .dot.active { background: var(--gold); width: 50px; }
+
+        .tg-post-btn {
+            margin-top: 16px; padding: 0 32px; height: 46px; min-width: 220px;
+            background: var(--tg-blue); border: none; border-radius: 12px;
+            display: none; align-items: center; justify-content: center; gap: 12px;
+            cursor: pointer; z-index: 100; color: #ffffff; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px; font-size: 13px;
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
+            opacity: 0; animation: fadeIn 0.4s forwards; animation-delay: 0.6s;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(0); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .tg-post-btn svg { width: 22px; height: 22px; fill: #fff; }
+
+        /* --- ZOOM SYSTEM --- */
+        #zoomOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 5, 0.98); backdrop-filter: blur(20px);
+            z-index: 9999; display: none; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s ease; overflow: hidden; touch-action: none;
+        }
+        #zoomOverlay.active { display: flex; opacity: 1; }
+        #zoomImg { max-width: 90%; max-height: 80vh; border-radius: 5px; will-change: transform; cursor: grab; z-index: 10000; touch-action: none; }
+
+        .zoom-close {
+            position: absolute; top: 30px; right: 30px; width: 30px; height: 30px;
+            fill: #000; cursor: pointer; z-index: 10010; background: var(--gold);
+            border-radius: 50%; padding: 8px; box-shadow: 0 4px 15px rgba(142, 121, 62, 0.4);
+        }
+
+        .zoom-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 60px; height: 60px; fill: #fff; cursor: pointer;
+            opacity: 0; transition: opacity 0.4s ease; z-index: 10005;
+            display: flex; align-items: center; justify-content: center;
+            pointer-events: all; user-select: none;
+        }
+        #zoomOverlay:hover .zoom-nav { opacity: 0.5; }
+        .zoom-nav:hover { opacity: 1 !important; }
+        .zoom-nav svg { pointer-events: none; }
+        .prev-zoom { left: 40px; }
+        .next-zoom { right: 40px; }
+
+        .zoom-bar {
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            display: flex; align-items: center; gap: 15px; background: rgba(0, 0, 0, 0.6);
+            padding: 10px 20px; border-radius: 30px; z-index: 10002;
+        }
+        #zoomSlider { -webkit-appearance: none; width: 150px; height: 2px; background: #444; }
+        #zoomSlider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--gold); border-radius: 50%; }
+
+        .jump-button {
+            position: fixed; bottom: 30px; right: 25px; width: 55px; height: 55px;
+            background: var(--gold); border-radius: 50%; z-index: 2000; 
+            display: none; align-items: center; justify-content: center; 
+            opacity: 0; visibility: hidden; transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border: none; cursor: pointer;
+        }
+        .jump-button svg { width: 24px; height: 24px; fill: #000; }
+        .jump-button.visible { opacity: 0.9; visibility: visible; }
+
+        @keyframes adEntrance { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 1000px) {
+            .ad-pillar { display: none !important; }
+            .ad-720-unit { display: none !important; }
+            .mobile-only-ads { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 25px 0 80px 0; }
+                                    header {
+                width: 90%;
+                margin: 0 auto;
+                padding: 16px 0 8px;
+                letter-spacing: 0.55em;
+                font-size: 14px;
+                text-align: center;
+            }
+            header h5, header h4 {
+                font-size: 11px;
+                letter-spacing: 0.28em;
+                margin-top: 5px;
+            }
+            .viewer-wrapper { padding-top: 8px; width: 100%; }
+                        #maskBox {
+                overflow: visible;
+                height: auto;
+                min-height: 160px;
+                -webkit-mask-image: linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+                mask-image: linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+            }
+            .dots { margin-top: 14px; gap: 8px; }
+            .dot { width: 18px; height: 2px; }
+            .dot.active { width: 36px; }
+            .tg-post-btn {
+                margin: 14px auto 16px;
+                width: 75%;
+                max-width: 280px;
+                height: 46px;
+                font-size: 12px;
+                border-radius: 12px;
+            }
+            body, html { overflow-y: auto !important; overflow-x: hidden !important; height: auto; display: block; }
+            .jump-button { display: flex; }
+            .zoom-nav { display: none !important; }
+            .ad-container-720 { position: relative; background: none; bottom: auto; padding-top: 10px; }
+        }
+    </style>
 </head>
-<body class="gallery-mode">
-    <header class="gallery-nav">
-        <div class="gallery-logo">
-            <span>💎</span> SHIZUKA
+<body>
+    <header>Shizuka:
+      <h5>&quot;If images don't appear,</h5>
+  		<h4>Please Refresh&quot;</h4>
+  	</header>
+    <div id='zoomOverlay'>
+        <div class='zoom-close' onclick='closeZoom()'><svg viewBox='0 0 24 24'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg></div>
+        <div class='zoom-nav prev-zoom' id='zPrev'><svg height='40' viewBox='0 0 24 24' width='40'><path d='M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z'/></svg></div>
+        <img draggable='false' id='zoomImg' src=''/>
+        <div class='zoom-nav next-zoom' id='zNext'><svg height='40' viewBox='0 0 24 24' width='40'><path d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'/></svg></div>
+        <div class='zoom-bar'>
+            <span onclick='adjustScale(-0.3)' style='cursor:pointer; color:#fff'>&#8722;</span>
+            <input id='zoomSlider' max='4' min='1' step='0.01' type='range' value='1'/>
+            <span onclick='adjustScale(0.3)' style='cursor:pointer; color:#fff'>+</span>
         </div>
-        <div class="gallery-counter" id="galleryCounter">
-            <span>1</span> / 1
+    </div>
+<!-- ======================================================================= AD Piller Left Start ======================================================================= -->
+    
+        <div class='nav-hub'>
+            <div class='dots' id='dots'></div>
+            <button class='tg-post-btn' id='tgBtn' onclick='goToTelegram()'>
+                <svg class='bi bi-telegram' fill='currentColor' height='16' viewBox='0 0 16 16' width='16' xmlns='http://www.w3.org/2000/svg'>
+  <path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.287 5.906q-1.168.486-4.666 2.01-.567.225-.595.442c-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294q.39.01.868-.32 3.269-2.206 3.374-2.23c.05-.012.12-.026.166.016s.042.12.037.141c-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8 8 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629q.14.092.27.187c.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.4 1.4 0 0 0-.013-.315.34.34 0 0 0-.114-.217.53.53 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09'/>
+</svg>
+                <span>Back to Post</span>
+            </button>
         </div>
-        <button class="gallery-close-btn" id="closeBtn" title="Back to Channel">
-            ✕
-        </button>
-    </header>
-
-    <main class="gallery-stage">
-        <button class="nav-arrow prev" id="prevBtn" aria-label="Previous Slide">‹</button>
-        <div class="slider-track" id="sliderTrack"></div>
-        <button class="nav-arrow next" id="nextBtn" aria-label="Next Slide">›</button>
-    </main>
-
-    <div class="dots-container" id="dotsContainer"></div>
-
-    <footer class="gallery-bottom-bar">
-        <a href="#" class="cta-button" id="ctaButton" target="_blank" rel="noopener">
-            WATCH FULL VIDEO IN HD 🍿
-        </a>
-    </footer>
-
-    <div class="lightbox-modal" id="lightboxModal">
-        <img id="lightboxImg" src="" alt="Enlarged Preview">
     </div>
 
-    <script src="/js/gallery.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            window.initGallery();
+    
+
+    <button class='jump-button' id='jumpBtn' onclick='window.scrollTo({top: 0, behavior: &quot;smooth&quot;})'>
+        <svg viewBox='0 0 24 24'><path d='M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z'/></svg>
+    </button>
+
+    <script type="text/javascript">
+const urlParams = new URLSearchParams(location.search);
+        const CHANNEL_USERNAME = urlParams.get('ch') || "SelectVault";
+
+        // ── Server config: change ONE line here when you move hosting ──────
+        const STREAM_SERVER = "https://shizuka.fun";
+
+        // ── Analytics: log image page view ────────────────────────────
+        (function(){
+          var _k = urlParams.get('key') || '';
+          if (_k && STREAM_SERVER) {
+            try { (navigator.sendBeacon || function(u){fetch(u,{keepalive:true})})(STREAM_SERVER+'/analytics/img_view?key='+_k); } catch(e){}
+          }
+        })();
+
+        // ── Parse imgs= as "id:hash,id:hash" pairs → build secure /img/ URLs
+        const images = (urlParams.get('imgs') || "")
+            .split(',')
+            .filter(s => s.trim() !== "")
+            .map(pair => {
+                const [id, hash] = pair.trim().split(':');
+                return hash
+                    ? `${STREAM_SERVER}/img/${id}?hash=${hash}`
+                    : `${STREAM_SERVER}/img/${id}`;
+            });
+
+        // ── Decode base64 tg= param (may be raw URL for legacy links) ──────
+        const _tgRaw = urlParams.get('tg') || "";
+        let tgRedirectLink = _tgRaw;
+        if (_tgRaw && !_tgRaw.startsWith('http')) {
+            try {
+                const b64 = _tgRaw.replace(/-/g, '+').replace(/_/g, '/');
+                const pad = b64 + '=='.slice(0, (4 - b64.length % 4) % 4);
+                tgRedirectLink = decodeURIComponent(escape(atob(pad)));
+            } catch(e) { tgRedirectLink = _tgRaw; }
+        }
+
+        const CONFIG = {
+            distDesk: 18, 
+            distMob: 10, 
+            heroMult: 0.56, 
+            mobHeroMult: 0.90,
+            peekOp: 0.65, 
+            peekSDesk: 0.90, 
+            peekSMob: 0.88, 
+            swipeSens: 11, 
+            closeThreshold: 140
+        };
+
+        const track = document.getElementById("sliderTrack");
+        const mask = document.getElementById("maskBox");
+        const zoomOverlay = document.getElementById("zoomOverlay");
+        const zoomImg = document.getElementById("zoomImg");
+        const zoomSlider = document.getElementById("zoomSlider");
+        const zPrev = document.getElementById('zPrev');
+        const zNext = document.getElementById('zNext');
+        const jumpBtn = document.getElementById('jumpBtn');
+        const tgBtn = document.getElementById('tgBtn');
+
+        let index = 0, isMobile = window.innerWidth < 1000;
+        let scale = 1, currentX = 0, currentY = 0, storedX = 0, storedY = 0, startX = 0, startY = 0;
+        let isPanning = false, lastTapTime = 0, lastOpenTime = 0, evCache = [], prevDiff = -1;
+
+        if (tgRedirectLink) { tgBtn.style.display = 'flex'; }
+
+        // Logic to show Jump Button only on mobile when maskBox is half-passed
+        window.addEventListener('scroll', () => {
+            if (isMobile) {
+                const triggerPoint = mask.offsetHeight / 2;
+                if (window.scrollY > triggerPoint) {
+                    jumpBtn.classList.add('visible');
+                } else {
+                    jumpBtn.classList.remove('visible');
+                }
+            }
         });
+
+        function goToTelegram() {
+            if (tgRedirectLink) {
+                if (!isNaN(tgRedirectLink)) {
+                    window.open(`https://t.me/${CHANNEL_USERNAME}/${tgRedirectLink}`, '_blank');
+                } else {
+                    window.open(tgRedirectLink, '_blank');
+                }
+            }
+        }
+
+        // ── Ping Railway to wake it up before loading images ──────────────
+        let _serverAlive = null; // null=unknown, true=ok, false=bad
+        function pingServer() {
+            return fetch(STREAM_SERVER + '/ping', { method: 'GET', mode: 'cors', cache: 'no-cache' })
+                .then(r => { _serverAlive = r.ok; return r.ok; })
+                .catch(() => { _serverAlive = false; return false; });
+        }
+
+                function getSlideDims() {
+            const winW = window.innerWidth;
+            const sw = isMobile ? Math.round(winW * CONFIG.mobHeroMult) : Math.min(Math.round(winW * CONFIG.heroMult), 1080);
+            const sh = Math.round(sw * 9 / 16);
+            return { sw, sh };
+        }
+
+        function buildSlides() {
+            const { sw, sh } = getSlideDims();
+            mask.style.height = `${sh + 20}px`;
+
+            images.forEach((src, i) => {
+                const slide = document.createElement("div");
+                slide.className = 'slide';
+                slide.style.width = `${sw}px`;
+                slide.style.height = `${sh}px`;
+                slide.style.marginRight = `${isMobile ? CONFIG.distMob : CONFIG.distDesk}px`;
+
+                const img = document.createElement('img');
+                img.draggable = false;
+
+                const ph = document.createElement('div');
+                ph.className = 'img-placeholder';
+                ph.innerHTML = `
+                    <div class="ph-spinner-wrap">
+                        <svg class="ph-circle-svg" viewBox="0 0 60 60">
+                            <circle class="ph-circle-bg" cx="30" cy="30" r="22"></circle>
+                            <circle class="ph-circle-bar" id="phCircle${i}" cx="30" cy="30" r="22"></circle>
+                        </svg>
+                        <span class="ph-percent" id="phPercent${i}">0%</span>
+                    </div>
+                    <span class="ph-text" id="phText${i}">Loading...</span>
+                    <button class="ph-refresh" id="phRefresh${i}">
+                        <span class="ph-ping-dot" id="pingDot${i}"></span>
+                        &#x21BB; Refresh
+                    </button>`;
+
+                const circleBar = ph.querySelector('#phCircle' + i);
+                const percentText = ph.querySelector('#phPercent' + i);
+                const textSpan = ph.querySelector('#phText' + i);
+                const btn = ph.querySelector('#phRefresh' + i);
+                const dot = ph.querySelector('#pingDot' + i);
+
+                ph.style.display = 'flex';
+                img.style.display = 'none';
+
+                function loadWithProgress(mediaUrl) {
+                    const circumference = 138.2;
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('GET', mediaUrl, true);
+                    xhr.responseType = 'blob';
+
+                    xhr.onprogress = function(e) {
+                        if (e.lengthComputable && e.total > 0) {
+                            const ratio = e.loaded / e.total;
+                            const pct = Math.min(Math.round(ratio * 100), 100);
+                            const offset = circumference - (ratio * circumference);
+                            if (circleBar) circleBar.style.strokeDashoffset = offset;
+                            if (percentText) percentText.textContent = pct + '%';
+                            if (textSpan) textSpan.textContent = `Loading ${pct}%`;
+                        } else {
+                            const mb = (e.loaded / (1024 * 1024)).toFixed(1);
+                            if (percentText) percentText.textContent = mb + 'M';
+                            if (textSpan) textSpan.textContent = `Downloaded ${mb} MB`;
+                        }
+                    };
+
+                    xhr.onload = function() {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            if (circleBar) circleBar.style.strokeDashoffset = '0';
+                            if (percentText) percentText.textContent = '100%';
+                            const blobUrl = URL.createObjectURL(xhr.response);
+                            img.src = blobUrl;
+                            img.onload = () => {
+                                ph.style.display = 'none';
+                                img.style.display = '';
+                            };
+                        } else {
+                            fallbackLoad(mediaUrl);
+                        }
+                    };
+
+                    xhr.onerror = function() {
+                        fallbackLoad(mediaUrl);
+                    };
+
+                    xhr.send();
+                }
+
+                function fallbackLoad(mediaUrl) {
+                    img.src = mediaUrl;
+                    img.onload = () => {
+                        ph.style.display = 'none';
+                        img.style.display = '';
+                    };
+                    img.onerror = () => {
+                        ph.style.display = 'flex';
+                        img.style.display = 'none';
+                        if (textSpan) textSpan.innerHTML = 'Failed to load<br><span style="font-size:10px;opacity:0.6">Tap refresh to retry</span>';
+                    };
+                }
+
+                btn.onclick = function() {
+                    dot.className = 'ph-ping-dot';
+                    btn.disabled = true;
+                    pingServer().then(alive => {
+                        dot.className = 'ph-ping-dot ' + (alive ? 'ok' : 'bad');
+                        btn.disabled = false;
+                        if (alive) {
+                            loadWithProgress(src + '&_r=' + Date.now());
+                        } else {
+                            if (textSpan) textSpan.innerHTML = 'Server is down<br><span style="font-size:10px;opacity:0.6">Try again in a moment</span>';
+                        }
+                    });
+                };
+
+                slide.style.position = 'relative';
+                slide.appendChild(ph);
+                slide.appendChild(img);
+                track.appendChild(slide);
+
+                const d = document.createElement("div");
+                d.className = 'dot';
+                d.onclick = () => goTo(i);
+                document.getElementById("dots").appendChild(d);
+
+                // Start real loading
+                loadWithProgress(src);
+            });
+        }
+
+        buildSlides();
+        update();
+        pingServer();
+
+                        function update() {
+            isMobile = window.innerWidth < 1000;
+            const { sw, sh } = getSlideDims();
+            const winW = window.innerWidth;
+            const gap = isMobile ? Math.round(winW * 0.025) : CONFIG.distDesk;
+            const adZone = isMobile ? 0 : 320;
+            const centerZoneW = winW - adZone * 2;
+            const centerOffset = isMobile ? (winW - sw) / 2 : adZone + (centerZoneW - sw) / 2;
+            track.style.transform = `translate3d(${-index * (sw + gap) + centerOffset}px, 0, 0)`;
+
+            if (!isMobile) {
+                const adL = document.querySelector('.ad-left');
+                const adR = document.querySelector('.ad-right');
+                const adLeftEnd = adL ? adL.getBoundingClientRect().right : 320;
+                const adRightStart = adR ? adR.getBoundingClientRect().left : (winW - 320);
+                const fadeW = 35;
+                const p1 = ((adLeftEnd / winW) * 100).toFixed(1);
+                const p2 = (((adLeftEnd + fadeW) / winW) * 100).toFixed(1);
+                const p3 = (((adRightStart - fadeW) / winW) * 100).toFixed(1);
+                const p4 = ((adRightStart / winW) * 100).toFixed(1);
+                const grad = `linear-gradient(to right, transparent 0%, transparent ${p1}%, black ${p2}%, black ${p3}%, transparent ${p4}%, transparent 100%)`;
+                mask.style.webkitMaskImage = grad;
+                mask.style.maskImage = grad;
+            } else {
+                mask.style.webkitMaskImage = '';
+                mask.style.maskImage = '';
+            }
+
+            document.querySelectorAll('.slide').forEach((s, i) => {
+                s.style.opacity = i === index ? "1" : CONFIG.peekOp;
+                s.style.transform = i === index ? "scale(1)" : `scale(${isMobile ? CONFIG.peekSMob : CONFIG.peekSDesk})`;
+                s.style.transformOrigin = (i < index) ? "right center" : (i > index ? "left center" : "center center");
+            });
+            document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === index));
+            zPrev.style.visibility = (index === 0) ? 'hidden' : 'visible';
+            zNext.style.visibility = (index === images.length - 1) ? 'hidden' : 'visible';
+        }
+
+
+        window.addEventListener('resize', () => {
+            isMobile = window.innerWidth < 1000;
+            const { sw, sh } = getSlideDims();
+            mask.style.height = `${sh + 20}px`;
+            document.querySelectorAll('.slide').forEach(s => {
+                s.style.width = `${sw}px`;
+                s.style.height = `${sh}px`;
+                s.style.marginRight = `${isMobile ? CONFIG.distMob : CONFIG.distDesk}px`;
+            });
+            update();
+        });
+
+        function goTo(i) {
+            index = Math.max(0, Math.min(i, images.length - 1));
+            if (zoomOverlay.classList.contains('active')) {
+                zoomImg.src = images[index];
+                currentX = 0; currentY = 0; storedX = 0; storedY = 0; scale = 1;
+                render();
+            }
+            update();
+        }
+
+        function openZoom(i) {
+            index = i;
+            zoomImg.src = images[index];
+            zoomOverlay.style.display = 'flex';
+            zoomOverlay.style.opacity = '0';
+            currentX = 0; currentY = 0; storedX = 0; storedY = 0; scale = 1;
+            lastOpenTime = Date.now();
+            requestAnimationFrame(() => {
+                zoomOverlay.classList.add('active');
+                zoomOverlay.style.opacity = '';
+                render(); update();
+            });
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeZoom() {
+            zoomOverlay.style.opacity = '0';
+            setTimeout(() => {
+                zoomOverlay.classList.remove('active');
+                zoomOverlay.style.display = 'none';
+                zoomOverlay.style.opacity = '';
+            }, 300);
+            document.body.style.overflow = isMobile ? 'auto' : 'visible';
+        }
+
+        function render() {
+            const rect = zoomImg.getBoundingClientRect();
+            const maxX = Math.max(0, (rect.width - window.innerWidth) / 2);
+            const maxY = Math.max(0, (rect.height - window.innerHeight) / 2);
+            if (Math.abs(currentX) > maxX) currentX = Math.sign(currentX) * maxX;
+            if (Math.abs(currentY) > maxY) currentY = Math.sign(currentY) * maxY;
+            zoomImg.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) scale(${scale})`;
+            zoomSlider.value = scale;
+        }
+
+        function adjustScale(amt) {
+            scale = Math.max(1, Math.min(4, scale + amt));
+            if (scale === 1) { currentX = 0; currentY = 0; storedX = 0; storedY = 0; }
+            render();
+        }
+
+        zoomImg.onpointerdown = (e) => {
+            evCache.push(e);
+            const now = Date.now();
+            if (evCache.length === 1 && now - lastTapTime < 300) {
+                if (scale > 1.1) { scale = 1; currentX = 0; currentY = 0; storedX = 0; storedY = 0; } 
+                else { scale = 2.5; currentX = (window.innerWidth / 2 - e.clientX); currentY = (window.innerHeight / 2 - e.clientY); storedX = currentX; storedY = currentY; }
+                render(); lastTapTime = 0; return;
+            }
+            lastTapTime = now;
+            isPanning = true;
+            startX = e.clientX; startY = e.clientY;
+            zoomImg.setPointerCapture(e.pointerId);
+        };
+
+        zoomImg.onpointermove = (e) => {
+            for (let i = 0; i < evCache.length; i++) { if (e.pointerId === evCache[i].pointerId) { evCache[i] = e; break; } }
+            if (evCache.length === 2) {
+                const curDiff = Math.sqrt(Math.pow(evCache[1].clientX - evCache[0].clientX, 2) + Math.pow(evCache[1].clientY - evCache[0].clientY, 2));
+                if (prevDiff > 0) adjustScale((curDiff - prevDiff) * 0.01);
+                prevDiff = curDiff;
+            } 
+            else if (isPanning && evCache.length === 1) {
+                currentX = storedX + (e.clientX - startX);
+                currentY = storedY + (e.clientY - startY);
+                requestAnimationFrame(render);
+            }
+        };
+
+        zoomImg.onpointerup = (e) => {
+            for (let i = 0; i < evCache.length; i++) { if (evCache[i].pointerId === e.pointerId) { evCache.splice(i, 1); break; } }
+            if (evCache.length < 2) prevDiff = -1;
+            if (evCache.length === 0) {
+                isPanning = false;
+                const totalDistX = currentX - storedX;
+                const totalDistY = Math.abs(currentY - storedY);
+                if (scale <= 1.05) {
+                    if (totalDistX > CONFIG.swipeSens) goTo(index - 1);
+                    else if (totalDistX < -CONFIG.swipeSens) goTo(index + 1);
+                    else if (totalDistY > CONFIG.closeThreshold) closeZoom();
+                }
+                storedX = currentX; storedY = currentY;
+                render();
+            }
+        };
+
+        // ── Zoom nav buttons ────────────────────────────────────────────────
+        zPrev.onclick = (e) => { e.stopPropagation(); goTo(index - 1); };
+        zNext.onclick = (e) => { e.stopPropagation(); goTo(index + 1); };
+
+        // ── Zoom slider ──────────────────────────────────────────────────────
+        zoomSlider.oninput = () => { scale = parseFloat(zoomSlider.value); if (scale === 1) { currentX = 0; currentY = 0; storedX = 0; storedY = 0; } render(); };
+
+        // ── Close overlay on background click (not on image or controls) ────
+        zoomOverlay.onclick = (e) => { if (e.target === zoomOverlay) closeZoom(); };
+
+        zoomOverlay.onwheel = (e) => { e.preventDefault(); adjustScale(e.deltaY > 0 ? -0.2 : 0.2); };
+        mask.onwheel = (e) => {
+            if (isMobile || zoomOverlay.classList.contains('active')) return;
+            e.preventDefault();
+            if (e.deltaY > 0) goTo(index + 1); else goTo(index - 1);
+        };
+
+        let sX = 0, sY = 0, isD = false, isS = false, dTime = 0;
+        const dragStart = (e) => {
+            isD = true; isS = false;
+            sX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            sY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+            dTime = Date.now(); track.style.transition = 'none';
+        };
+        const dragMove = (e) => {
+            if (!isD || isS) return;
+            const x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            const y = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+            if (e.type.includes('touch') && Math.abs(y - sY) > Math.abs(x - sX)) { isS = true; isD = false; return; }
+            const sw = isMobile ? window.innerWidth * CONFIG.mobHeroMult : window.innerWidth * CONFIG.heroMult;
+            const gap = isMobile ? CONFIG.distMob : CONFIG.distDesk;
+            track.style.transform = `translate3d(${-index * (sw + gap) + (window.innerWidth - sw) / 2 + (x - sX)}px, 0, 0)`;
+        };
+        const dragEnd = (e) => {
+            if (!isD) return; isD = false;
+            const x = e.type.includes('touch') ? e.changedTouches[0].clientX : e.clientX;
+            track.style.transition = 'transform 0.6s cubic-bezier(.23, 1, 0.32, 1)';
+            if (Math.abs(x - sX) < 10 && (Date.now() - dTime) < 250) openZoom(index);
+            else {
+                let diff = sX - x;
+                if (Math.abs(diff) > CONFIG.swipeSens) goTo(diff > 0 ? index + 1 : index - 1); else update();
+            }
+        };
+
+        mask.onmousedown = dragStart; mask.ontouchstart = dragStart;
+        window.onmousemove = dragMove; window.ontouchmove = dragMove;
+        window.onmouseup = dragEnd; window.ontouchend = dragEnd;
+        window.onresize = () => { isMobile = window.innerWidth < 1000; update(); };
+
+        update();
     </script>
 </body>
 </html>

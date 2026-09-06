@@ -2,204 +2,407 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <title>The Crash That Rewrote the Rules — Capital Case Files</title>
-    <meta name="description" content="Capital Case Files editorial archive. Verified document delivery network.">
-    <link rel="stylesheet" href="/css/luxury-theme.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>">
+    <meta name="description" content="The story of the 2008 financial crisis: how mortgage-backed securities, leverage, and blind trust in ratings agencies brought the global banking system to its knees.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        .vault-hero {
-            text-align: center;
-            padding: 32px 20px;
-            background: #0e0e0e;
-            border: 1px solid rgba(212, 175, 55, 0.35);
-            border-radius: 14px;
-            margin-bottom: 40px;
-            box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+        :root {
+            --gold: #D4AF37;
+            --gold-dark: #8E793E;
+            --tg-blue: #0088cc;
+            --bg: #0b0b0b;
         }
-        .vault-badge {
-            font-family: var(--font-ui);
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            color: var(--gold);
+        body, html {
+            margin: 0; padding: 0;
+            background-color: var(--bg) !important;
+            color: #e0e0e0;
+            font-family: Georgia, 'Times New Roman', serif;
+            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        #mandatory-section, .content-outer, .content-fauxcolumn-outer, .region-inner {
+            display: none !important;
+        }
+        .wrapper {
+            width: 100%; max-width: 850px;
+            padding: 36px 20px 80px;
+            box-sizing: border-box;
+        }
+
+        /* ─── VAULT CTA ───────────────────────────────────── */
+        .vault-label {
+            font-family: Arial, sans-serif;
+            font-size: 11px; letter-spacing: 0.5em;
             text-transform: uppercase;
-            margin-bottom: 12px;
+            color: var(--gold-dark);
+            text-align: center;
+            margin-bottom: 10px; opacity: 0.7;
         }
-        .vault-title {
-            font-family: var(--font-heading);
-            font-size: 26px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 10px;
+        .vault-heading {
+            font-family: Georgia, serif;
+            font-size: 24px; color: #f0f0f0;
+            text-align: center;
+            margin: 0 0 8px; font-weight: 700;
         }
         .vault-sub {
-            font-family: var(--font-ui);
-            font-size: 13.5px;
-            color: #888;
-            margin-bottom: 28px;
+            font-size: 13px; color: #555;
+            text-align: center; margin-bottom: 28px;
+            font-family: Georgia, serif; font-style: italic;
         }
-        .vault-btns {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            max-width: 420px;
-            margin: 0 auto;
+
+        /* ─── AD CONTAINERS ───────────────────────────────── */
+        /* Hidden by default; JS reveals only when ?preview= is present */
+        .cond-ad { display: none !important; }
+
+        /* 300×250 rectangle — centers on mobile */
+        .ad-rect {
+            margin: 20px auto;
+            width: 300px; max-width: 100%;
+            min-height: 250px;
+            overflow: hidden;
         }
-        .btn-preview-cta {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* 320×50 mobile banner — never wider than viewport */
+        .ad-banner {
+            margin: 18px auto;
+            width: 100%; max-width: 320px;
+            min-height: 50px;
+            overflow: hidden;
+        }
+        /* Native / social bar */
+        .ad-native { margin: 18px 0; }
+
+        /* ─── BUTTONS ─────────────────────────────────────── */
+        .btn-area {
+            width: 100%; display: flex; flex-direction: column;
+            align-items: center; gap: 14px; margin-bottom: 28px;
+        }
+        .btn-preview {
+            display: flex; align-items: center; justify-content: center;
             gap: 10px;
-            height: 52px;
-            background: linear-gradient(135deg, #e8c659 0%, var(--gold) 50%, var(--gold-dark) 100%);
-            color: #000;
-            font-family: var(--font-ui);
-            font-weight: 800;
-            font-size: 13px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            border-radius: 10px;
-            text-decoration: none;
-            box-shadow: 0 6px 24px rgba(212, 175, 55, 0.35);
+            width: 100%; max-width: 320px; min-height: 54px;
+            background: var(--gold-dark); border: none; border-radius: 10px;
+            color: #000; font-family: 'Inter', sans-serif;
+            text-decoration: none; cursor: pointer;
+            box-shadow: 0 6px 20px rgba(142,121,62,0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+            padding: 10px 16px; box-sizing: border-box;
+        }
+        .btn-preview:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(142,121,62,0.5); }
+        .btn-preview svg { width: 18px; height: 18px; fill: #000; flex-shrink: 0; }
+        .btn-preview-label {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 2px;
+        }
+        .btn-preview-main {
+            font-weight: 700; font-size: 13px;
+            letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .btn-preview-hint {
+            font-size: 9px; opacity: 0.6;
+            letter-spacing: 1px; font-weight: 400;
+        }
+        .btn-back {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; max-width: 320px; height: 54px;
+            background: var(--tg-blue); border: none; border-radius: 10px;
+            color: #ffffff; font-family: 'Inter', sans-serif;
+            font-weight: 600; font-size: 13px;
+            letter-spacing: 1px; text-transform: uppercase;
+            text-decoration: none; cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0,136,204,0.4);
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        .btn-preview-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 32px rgba(212, 175, 55, 0.55);
+        .btn-back:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(0,136,204,0.55); }
+        .btn-back svg { width: 20px; height: 20px; fill: #fff; flex-shrink: 0; }
+
+        /* ─── DIVIDER ─────────────────────────────────────── */
+        .vault-divider {
+            width: 40px; height: 1px;
+            background: var(--gold); opacity: 0.35;
+            margin: 40px auto;
         }
-        .btn-unlock-cta {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            height: 48px;
-            background: transparent;
-            color: #ccc;
-            border: 1px solid #333;
-            font-family: var(--font-ui);
-            font-weight: 600;
-            font-size: 12px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: border-color 0.2s, color 0.2s;
+
+        /* ─── ARTICLE ─────────────────────────────────────── */
+        .article-tag {
+            color: var(--gold); font-family: Arial, sans-serif;
+            font-size: 11px; text-transform: uppercase;
+            letter-spacing: 3px; font-weight: 700; margin-bottom: 16px;
         }
-        .btn-unlock-cta:hover {
-            border-color: var(--gold);
-            color: var(--gold);
+        h1 {
+            font-size: 34px; color: #f5f5f5;
+            margin-top: 0; margin-bottom: 12px;
+            line-height: 1.25; letter-spacing: -0.5px; font-weight: 700;
+        }
+        .byline {
+            font-family: Arial, sans-serif; font-size: 13px;
+            color: #555; margin-bottom: 32px;
+            padding-bottom: 22px; border-bottom: 1px solid #1c1c1c;
+        }
+        .byline b { color: var(--gold); }
+        h2 {
+            color: var(--gold); font-size: 19px;
+            font-family: Arial, sans-serif; font-weight: 600;
+            margin: 36px 0 12px;
+        }
+        p {
+            line-height: 1.85; color: #b0b0b0;
+            margin: 16px 0; text-align: justify; font-size: 16px;
+        }
+        .pull-quote {
+            border-left: 3px solid var(--gold);
+            padding: 10px 20px; margin: 28px 0;
+            font-style: italic; color: #c8a050;
+            font-size: 17px; line-height: 1.6;
+        }
+        /* Key facts box */
+        .key-facts {
+            background: #111; border: 1px solid #1e1e1e;
+            border-left: 3px solid var(--gold-dark);
+            border-radius: 4px; padding: 20px 22px;
+            margin: 28px 0; font-family: Arial, sans-serif;
+        }
+        .key-facts h3 {
+            color: var(--gold); font-size: 11px;
+            letter-spacing: 2px; text-transform: uppercase;
+            margin: 0 0 14px; font-weight: 700;
+        }
+        .key-facts ul {
+            margin: 0; padding: 0 0 0 18px;
+        }
+        .key-facts li {
+            color: #888; font-size: 13px;
+            line-height: 1.7; margin-bottom: 4px;
+        }
+        .key-facts li b { color: #bbb; }
+        .blog-img {
+            width: 100%; border-radius: 4px;
+            margin: 20px 0 4px; border: 1px solid #1c1c1c;
+        }
+        .img-caption {
+            font-size: 12px; color: #555; text-align: center;
+            margin-bottom: 20px; font-family: Arial, sans-serif; font-style: italic;
+        }
+        .article-footer {
+            margin-top: 52px; padding-top: 18px;
+            border-top: 1px solid #1c1c1c;
+            font-family: Arial, sans-serif; font-size: 12px;
+            color: #444; text-align: center;
+        }
+        .note {
+            font-size: 11px; color: #2e2e2e; text-align: center;
+            margin-top: 4px; font-family: Georgia, serif;
+            font-style: italic; letter-spacing: 0.3px;
+        }
+
+        @media(max-width: 480px) {
+            h1 { font-size: 24px; }
+            .vault-heading { font-size: 20px; }
+            p { font-size: 15px; }
+            .pull-quote { font-size: 15px; }
         }
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        <header class="header-brand">
-            <div class="brand-badge">
-                <span></span> SHIZUKA VAULT
+<div class="wrapper">
+
+    <!-- ── VAULT CTA ──────────────────────────────────────── -->
+    <div class="vault-label">Capital Case Files</div>
+    <div class="vault-heading">Access the Full Case File.</div>
+    <div class="vault-sub">Select an option below to continue.</div>
+
+    <!--
+        300×250 above buttons.
+        Inline scripts fire immediately on page load (Adsterra captures atOptions at that moment).
+        The div stays hidden via .cond-ad; JS reveals it only when ?preview= is present.
+        This avoids the race condition caused by dynamic script injection.
+    -->
+    
+
+    <div class="btn-area">
+        <a id="btn-preview" class="btn-preview" href="#" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            <div class="btn-preview-label">
+                <span class="btn-preview-main">View Preview Images</span>
+                <span class="btn-preview-hint">(Refresh if not loaded)</span>
             </div>
-            <div class="brand-channel">
-                <a href="https://t.me/select_1_bot" target="_blank" rel="noopener">@select_1_bot</a>
-            </div>
-        </header>
-
-        <!-- ── VAULT LOCKER HERO ── -->
-        <section class="vault-hero">
-            <div class="vault-badge">VERIFIED MEDIA ARCHIVE</div>
-            <h2 class="vault-title">Select Vault Preview & Access</h2>
-            <p class="vault-sub">Choose an option below to preview highlights or unlock full release.</p>
-
-            <div class="vault-btns">
-                <a href="#" id="btn-preview" class="btn-preview-cta">
-                    VIEW PREVIEW GALLERY & 25s CLIP ⚡
-                </a>
-                <a href="#" id="btn-unlock" class="btn-unlock-cta">
-                    Unlock Full Video in HD 🍿
-                </a>
-            </div>
-        </section>
-
-        <span class="article-tag">CAPITAL CASE FILES &nbsp;&middot;&nbsp; SPECIAL REPORT</span>
-        <h1>The Crash That Rewrote the Rules</h1>
-        <div class="byline"><b>Capital Case Files</b> &nbsp;&middot;&nbsp; June 2026 &nbsp;&middot;&nbsp; 9 min read</div>
-
-        <article class="article-content">
-            <p>In September 2008, the United States government did something it had never done before: it allowed a major investment bank to fail. Lehman Brothers, 158 years old, filed for the largest bankruptcy in American history. Within hours, money markets froze. Credit stopped flowing. A crisis that had been building for years in the plumbing of the global financial system erupted into full view — and the world realised it had been living inside a machine no one fully understood.</p>
-    <h2>The Quiet Architecture of Risk</h2>
-    <p>To understand 2008, you have to understand what had been quietly assembled in the decade before it. Banks had always made mortgage loans. What changed in the late 1990s and early 2000s was what happened to those loans after they were made. Instead of sitting on a bank's balance sheet, they were packaged into securities — bonds backed by the cash flows of thousands of underlying mortgages. These were called mortgage-backed securities, or MBS.</p>
-    <p>The logic seemed sound. Spreading risk across thousands of loans in different geographies reduced the chance that any single default would matter. Rating agencies — Moody's, S&amp;P, Fitch — assigned the top tranches of these products their highest credit ratings: AAA. Pension funds, insurance companies, and banks around the world bought them in enormous quantities, believing them to be nearly as safe as government bonds. They were not.</p>
-    <h2>When Standards Disappeared</h2>
-    <p>For the securitisation machine to keep running, it needed a continuous supply of new mortgages. As the market grew, standards fell. Lenders began issuing loans to borrowers with no income verification, no assets, and no realistic ability to repay. These were called NINJA loans — No Income, No Job, No Assets. Brokers were paid per loan originated; they had no incentive to care about credit quality. The risk was someone else's problem the moment the loan was sold.</p>
-    <p>Between 2003 and 2006, American house prices rose by roughly 50%. This masked the problem entirely. Even weak borrowers could refinance or sell their homes if they ran into trouble, because the house was worth more than the loan. As long as prices rose, the machine worked. When they stopped — and then reversed — every assumption the models had relied upon proved false simultaneously.</p>
-    <div class="pull-quote">&ldquo;They built a cathedral of risk on a foundation that had never been stress-tested in a falling market.&rdquo;</div>
-    <h2>The Ratings Failure</h2>
-    <p>One of the most debated aspects of the 2008 crisis is the role of credit rating agencies. Their AAA ratings on complex mortgage-backed instruments gave institutional investors across the world the confidence to buy assets they did not fully understand. The agencies, in turn, were paid by the banks that structured the products — a conflict of interest that would later be the subject of congressional investigations and significant regulatory reform.</p>
-    <p>When house prices began falling in 2006 and 2007, defaults rose in the subprime market. The value of mortgage-backed securities began to fall. Banks that had held these securities on their balance sheets — often using short-term borrowing to finance long-term assets — found themselves facing enormous losses. As counterparties grew uncertain about who held toxic debt, the interbank lending market that lubricates the entire financial system began to seize.</p>
-    <h2>The Week the World Changed</h2>
-    <p>By September 2008, the crisis had been building for over a year. Bear Stearns had been rescued in March through a Federal Reserve-facilitated sale to JPMorgan. Fannie Mae and Freddie Mac — the two giant government-sponsored mortgage entities — had been placed into federal conservatorship on September 7th. Then, on September 15th, Lehman filed for bankruptcy.</p>
-    <p>The government's decision not to rescue Lehman — still debated by economists — sent shockwaves through global markets. The Reserve Primary Fund, a major money market fund that held Lehman commercial paper, "broke the buck" — its net asset value fell below $1. This triggered a run on money market funds across the system. Within days, the commercial paper market — through which companies fund their day-to-day operations — had effectively frozen.</p>
-    <p>Congress was asked to authorise $700 billion in emergency funds. The first vote failed. Markets fell 7% in a single session. Three days later, a revised bill passed. The Troubled Asset Relief Program — TARP — was signed into law. The Federal Reserve expanded its balance sheet in ways that had no precedent. The crisis was contained. The damage was not.</p>
-    <div class="pull-quote">&ldquo;Eight million jobs. $19.2 trillion in household wealth. The cost was paid by people who had never heard of a collateralised debt obligation.&rdquo;</div>
-    <h2>What the Regulators Missed</h2>
-    <p>The 2008 crisis was not a failure of a single institution. It was a systemic failure — of incentives, of oversight, of models that assumed the world would behave as it always had. The Dodd-Frank Act of 2010 introduced sweeping reforms: higher capital requirements for banks, mandatory central clearing for many derivatives, the creation of the Consumer Financial Protection Bureau, and stress tests for large financial institutions. The shadow banking system — where much of the risk had accumulated — was brought partially into regulatory view.</p>
-    <p>Whether those reforms are sufficient remains one of the central debates in financial policy. What is not debated is the cost. The Great Recession lasted from December 2007 to June 2009. Unemployment peaked at 10%. Global GDP fell for the first time since World War II. The effects on household wealth, retirement savings, and a generation's economic prospects persisted for years. The machine that no one fully understood had touched almost everyone.</p>
-        </article>
-
-        <footer class="article-footer">
-            Capital Case Files &nbsp;&middot;&nbsp; All case studies are drawn from public record and presented for educational purposes only.<br>
-            Protected by Shizuka Global Edge Network.
-        </footer>
+        </a>
+        <a id="btn-back" class="btn-back" href="#" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+            Back to Post
+        </a>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var params = new URLSearchParams(window.location.search);
-            var previewEncoded = params.get('preview');
-            var postEncoded = params.get('post');
-            var keyParam = params.get('key');
-            var STREAM_SERVER = 'https://shizuka.fun';
+    <p class="note">Capital Case Files &nbsp;&middot;&nbsp; For educational purposes only.</p>
 
-            function decodeVal(val) {
-                if (!val) return '';
-                if (val.startsWith('http://') || val.startsWith('https://') || val.startsWith('tg://')) return val;
-                try {
-                    var b64 = val.replace(/-/g, '+').replace(/_/g, '/');
-                    while (b64.length % 4) b64 += '=';
-                    return decodeURIComponent(escape(atob(b64)));
-                } catch(e) { return val; }
-            }
+    <div class="vault-divider"></div>
 
-            var previewBtn = document.getElementById('btn-preview');
-            var unlockBtn = document.getElementById('btn-unlock');
+    <!-- ── ARTICLE ────────────────────────────────────────── -->
+    <div class="article-tag">Case Study &nbsp;&middot;&nbsp; Financial History &nbsp;&middot;&nbsp; 2008</div>
+    <h1>The Crash That Rewrote the Rules</h1>
+    <div class="byline"><b>Capital Case Files</b> &nbsp;&middot;&nbsp; June 2026 &nbsp;&middot;&nbsp; 9 min read</div>
 
-            var targetPreviewUrl = decodeVal(previewEncoded);
-            var targetUnlockUrl = decodeVal(postEncoded);
+    <!-- 320×50 mobile banner — inline scripts, fluid container -->
+    
 
-            if (targetPreviewUrl) {
-                previewBtn.href = targetPreviewUrl;
-            } else if (keyParam) {
-                previewBtn.href = '/?key=' + encodeURIComponent(keyParam);
-            } else {
-                previewBtn.style.display = 'none';
-            }
+    <div class="key-facts">
+        <h3>Key Facts</h3>
+        <ul>
+            <li><b>Lehman Brothers bankruptcy:</b> September 15, 2008 — $613 billion in debt</li>
+            <li><b>Peak US unemployment:</b> 10.0% (October 2009)</li>
+            <li><b>US household wealth lost:</b> $19.2 trillion between 2007–2009</li>
+            <li><b>TARP bailout authorised:</b> $700 billion (October 3, 2008)</li>
+            <li><b>Global GDP decline:</b> First contraction since World War II</li>
+            <li><b>Recovery:</b> Dodd-Frank Act signed July 21, 2010</li>
+        </ul>
+    </div>
 
-            if (targetUnlockUrl) {
-                unlockBtn.href = targetUnlockUrl;
-            } else if (keyParam) {
-                unlockBtn.href = 'https://t.me/select_1_bot?start=' + encodeURIComponent(keyParam);
-            } else {
-                unlockBtn.href = 'https://t.me/select_1_bot';
-            }
+    <p>In September 2008, the United States government did something it had never done before: it allowed a major investment bank to fail. Lehman Brothers, 158 years old, filed for the largest bankruptcy in American history. Within hours, money markets froze. Credit stopped flowing. A crisis that had been building for years in the plumbing of the global financial system erupted into full view — and the world realised it had been living inside a machine no one fully understood.</p>
 
-            // Analytics beacon
+    <h2>The Quiet Architecture of Risk</h2>
+
+    <p>To understand 2008, you have to understand what had been quietly assembled in the decade before it. Banks had always made mortgage loans. What changed in the late 1990s and early 2000s was what happened to those loans after they were made. Instead of sitting on a bank's balance sheet, they were packaged into securities — bonds backed by the cash flows of thousands of underlying mortgages. These were called mortgage-backed securities, or MBS.</p>
+
+    <p>The logic seemed sound. Spreading risk across thousands of loans in different geographies reduced the chance that any single default would matter. Rating agencies — Moody's, S&amp;P, Fitch — assigned the top tranches of these products their highest credit ratings: AAA. Pension funds, insurance companies, and banks around the world bought them in enormous quantities, believing them to be nearly as safe as government bonds. They were not.</p>
+
+    <!-- Mid-article 300×250 -->
+    
+
+    <h2>When Standards Disappeared</h2>
+
+    <p>For the securitisation machine to keep running, it needed a continuous supply of new mortgages. As the market grew, standards fell. Lenders began issuing loans to borrowers with no income verification, no assets, and no realistic ability to repay. These were called NINJA loans — No Income, No Job, No Assets. Brokers were paid per loan originated; they had no incentive to care about credit quality. The risk was someone else's problem the moment the loan was sold.</p>
+
+    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800" class="blog-img" alt="Row of suburban houses representing the housing market" />
+    <div class="img-caption">The American housing market became the collateral for a global financial experiment.</div>
+
+    <p>Between 2003 and 2006, American house prices rose by roughly 50%. This masked the problem entirely. Even weak borrowers could refinance or sell their homes if they ran into trouble, because the house was worth more than the loan. As long as prices rose, the machine worked. When they stopped — and then reversed — every assumption the models had relied upon proved false simultaneously.</p>
+
+    <div class="pull-quote">&ldquo;They built a cathedral of risk on a foundation that had never been stress-tested in a falling market.&rdquo;</div>
+
+    <h2>The Ratings Failure</h2>
+
+    <p>One of the most debated aspects of the 2008 crisis is the role of credit rating agencies. Their AAA ratings on complex mortgage-backed instruments gave institutional investors across the world the confidence to buy assets they did not fully understand. The agencies, in turn, were paid by the banks that structured the products — a conflict of interest that would later be the subject of congressional investigations and significant regulatory reform.</p>
+
+    <!-- Mid-article 300×250 -->
+    
+
+    <p>When house prices began falling in 2006 and 2007, defaults rose in the subprime market. The value of mortgage-backed securities began to fall. Banks that had held these securities on their balance sheets — often using short-term borrowing to finance long-term assets — found themselves facing enormous losses. As counterparties grew uncertain about who held toxic debt, the interbank lending market that lubricates the entire financial system began to seize.</p>
+
+    <img src="https://images.unsplash.com/photo-1611974717537-434079893d98?auto=format&fit=crop&q=80&w=800" class="blog-img" alt="Trading screens showing the 2008 financial crisis" />
+    <div class="img-caption">Lehman Brothers' bankruptcy on September 15, 2008 triggered a global credit freeze.</div>
+
+    <h2>The Week the World Changed</h2>
+
+    <p>By September 2008, the crisis had been building for over a year. Bear Stearns had been rescued in March through a Federal Reserve-facilitated sale to JPMorgan. Fannie Mae and Freddie Mac — the two giant government-sponsored mortgage entities — had been placed into federal conservatorship on September 7th. Then, on September 15th, Lehman filed for bankruptcy.</p>
+
+    <p>The government's decision not to rescue Lehman — still debated by economists — sent shockwaves through global markets. The Reserve Primary Fund, a major money market fund that held Lehman commercial paper, "broke the buck" — its net asset value fell below $1. This triggered a run on money market funds across the system. Within days, the commercial paper market — through which companies fund their day-to-day operations — had effectively frozen.</p>
+
+    <p>Congress was asked to authorise $700 billion in emergency funds. The first vote failed. Markets fell 7% in a single session. Three days later, a revised bill passed. The Troubled Asset Relief Program — TARP — was signed into law. The Federal Reserve expanded its balance sheet in ways that had no precedent. The crisis was contained. The damage was not.</p>
+
+    <div class="pull-quote">&ldquo;Eight million jobs. $19.2 trillion in household wealth. The cost was paid by people who had never heard of a collateralised debt obligation.&rdquo;</div>
+
+    <h2>What the Regulators Missed</h2>
+
+    <p>The 2008 crisis was not a failure of a single institution. It was a systemic failure — of incentives, of oversight, of models that assumed the world would behave as it always had. The Dodd-Frank Act of 2010 introduced sweeping reforms: higher capital requirements for banks, mandatory central clearing for many derivatives, the creation of the Consumer Financial Protection Bureau, and stress tests for large financial institutions. The shadow banking system — where much of the risk had accumulated — was brought partially into regulatory view.</p>
+
+    <p>Whether those reforms are sufficient remains one of the central debates in financial policy. What is not debated is the cost. The Great Recession lasted from December 2007 to June 2009. Unemployment peaked at 10%. Global GDP fell for the first time since World War II. The effects on household wealth, retirement savings, and a generation's economic prospects persisted for years. The machine that no one fully understood had touched almost everyone.</p>
+
+    <div class="article-footer">Capital Case Files &nbsp;&middot;&nbsp; For educational purposes only. &nbsp;&middot;&nbsp; All analysis is retrospective.</div>
+
+    <!-- Bottom ad slots -->
+    
+    
+        <script async data-cfasync="false" src="https://turbulentrefreshments.com/4f535c3ff1147abdee144d2dc60a2b49/invoke.js"></script>
+    </div>
+
+</div>
+
+<!--
+    CONDITIONAL BLOCK — only the INTRUSIVE ads (popunder + social bar) are guarded.
+    Adsterra display ads use inline scripts above (they load silently in background for
+    all visitors; divs remain hidden via CSS for organics — only revealed below).
+-->
+<script>
+(function(){
+    var HAS = new URLSearchParams(location.search).has('preview');
+    if (!HAS) return;
+
+    /* Reveal all ad containers */
+    document.querySelectorAll('.cond-ad').forEach(function(el){
+        el.style.setProperty('display','flex','important');
+    });
+
+    /* Monetag popunder — only for referred users */
+    var s = document.createElement('script');
+    s.dataset.zone = '11099662';
+    s.src = 'https://al5sm.com/tag.min.js';
+    document.body.appendChild(s);
+
+    /* Social bar — delayed to not block LCP */
+    setTimeout(function(){
+        var ss = document.createElement('script');
+        ss.src = 'https://turbulentrefreshments.com/77/06/39/770639f0fa0bdcf62b6d8ceda82360d7.js';
+        document.body.appendChild(ss);
+    }, 1200);
+})();
+</script>
+
+<!-- MAIN LOGIC: set button hrefs from URL params -->
+<script>
+window.onload = function() {
+    var params         = new URLSearchParams(location.search);
+    var previewEncoded = params.get("preview");
+    var postEncoded    = params.get("post");
+    var STREAM         = "https://shizuka-stream-production.up.railway.app";
+
+    var previewBtn = document.getElementById("btn-preview");
+    var backBtn    = document.getElementById("btn-back");
+
+    function decodeParam(val) {
+        if (!val) return null;
+        try {
+            var b64 = val.replace(/-/g, "+").replace(/_/g, "/");
+            while (b64.length % 4) b64 += "=";
+            return decodeURIComponent(escape(atob(b64)));
+        } catch(e) { return val; }
+    }
+
+    var key = "";
+
+    if (previewEncoded) {
+        var previewUrl = decodeParam(previewEncoded);
+        if (previewUrl) {
+            previewBtn.href = previewUrl;
             try {
-                if (navigator.sendBeacon) {
-                    navigator.sendBeacon(STREAM_SERVER + '/analytics/traffic?source=S&action=view');
-                } else {
-                    fetch(STREAM_SERVER + '/analytics/traffic?source=S&action=view', { method: 'GET', mode: 'no-cors', keepalive: true }).catch(function() {});
-                }
-            } catch(e) {}
-        });
-    </script>
+                var pu = new URL(previewUrl);
+                key = pu.searchParams.get("key") || "";
+            } catch(e) {
+                var m = previewUrl.match(/[?&]key=([^&]+)/);
+                if (m) key = m[1];
+            }
+        }
+    } else {
+        previewBtn.style.display = "none";
+    }
+
+    if (postEncoded) {
+        var postUrl = decodeParam(postEncoded);
+        if (postUrl) backBtn.href = postUrl;
+    } else {
+        backBtn.style.display = "none";
+    }
+
+    try { fetch(STREAM + '/analytics/traffic?source=S&action=view', {keepalive:true}); } catch(e){}
+    if (key) {
+        try { fetch(STREAM + '/analytics/relay?key=' + encodeURIComponent(key) + '&step=S', {keepalive:true}); } catch(e){}
+    }
+
+    previewBtn.onclick = function() {
+        try { fetch(STREAM + '/analytics/traffic?source=S&action=click', {keepalive:true}); } catch(e){}
+    };
+};
+</script>
+
 </body>
 </html>
