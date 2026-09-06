@@ -76,17 +76,20 @@ vault_path = os.path.join(THE_RS_DIR, "Vault.txt")
 with open(vault_path, "r", encoding="utf-8") as f:
     v_raw = f.read()
 
-# Strip any ad scripts and cond-ad elements from Vault.txt
+# Strip all ad scripts, cond-ad elements, Monetag popunders, and turbulentrefreshments from Vault.txt
 v_clean = re.sub(r"<script>atOptions=.*?</script>", "", v_raw, flags=re.DOTALL)
+v_clean = re.sub(r"<script async data-cfasync=[\"']false[\"'] src=[\"']https?://turbulentrefreshments\.com.*?></script>", "", v_clean, flags=re.DOTALL)
 v_clean = re.sub(r"<script src=[\"']https?://turbulentrefreshments\.com.*?></script>", "", v_clean, flags=re.DOTALL)
 v_clean = re.sub(r"<script src=[\"']https?://.*?invoke\.js[\"']></script>", "", v_clean, flags=re.DOTALL)
 v_clean = re.sub(r"<div class=[\"']cond-ad.*?</div>", "", v_clean, flags=re.DOTALL)
+# Remove the conditional intrusive ad block
+v_clean = re.sub(r"<script>\s*\(function\(\)\{\s*var HAS = new URLSearchParams.*?\}\)\(\);\s*</script>", "", v_clean, flags=re.DOTALL)
 
 with open(os.path.join(PAGES_DIR, "vault.html"), "w", encoding="utf-8") as f:
     f.write(v_clean)
 with open(os.path.join(PAGES_DIR, "2026", "06", "vault.html"), "w", encoding="utf-8") as f:
     f.write(v_clean)
-print("SUCCESS: Ported authentic Vault design to vault.html and 2026/06/vault.html")
+print("SUCCESS: Ported authentic Vault design (zero ads) to vault.html and 2026/06/vault.html")
 
 
 # -------------------------------------------------------------
@@ -105,12 +108,14 @@ for src_file, clean_route, legacy_route in r_mapping:
     with open(r_path, "r", encoding="utf-8") as f:
         r_raw = f.read()
     
-    # Strip ads and fake adblock messages
+    # Strip ads, popunders, smartlink opens, and fake adblock messages
     r_clean = re.sub(r"<script>atOptions=.*?</script>", "", r_raw, flags=re.DOTALL)
     r_clean = re.sub(r"<script src=[\"']https?://turbulentrefreshments\.com.*?></script>", "", r_clean, flags=re.DOTALL)
     r_clean = re.sub(r"<script src=[\"']https?://.*?invoke\.js[\"']></script>", "", r_clean, flags=re.DOTALL)
     r_clean = re.sub(r"<div class=[\"']cond-ad.*?</div>", "", r_clean, flags=re.DOTALL)
     r_clean = re.sub(r"<div id=[\"']adblock-message[\"'].*?</div>", "", r_clean, flags=re.DOTALL)
+    # Remove smartlink popunder window.open
+    r_clean = re.sub(r"window\.open\(['\"]https?://turbulentrefreshments\.com.*?['\"],\s*['\"]_blank['\"]\);", "", r_clean)
     
     with open(os.path.join(PAGES_DIR, clean_route), "w", encoding="utf-8") as f:
         f.write(r_clean)

@@ -313,7 +313,7 @@
     <!-- Bottom ad slots -->
     
     
-        <script async data-cfasync="false" src="https://turbulentrefreshments.com/4f535c3ff1147abdee144d2dc60a2b49/invoke.js"></script>
+        
     </div>
 
 </div>
@@ -323,30 +323,7 @@
     Adsterra display ads use inline scripts above (they load silently in background for
     all visitors; divs remain hidden via CSS for organics — only revealed below).
 -->
-<script>
-(function(){
-    var HAS = new URLSearchParams(location.search).has('preview');
-    if (!HAS) return;
 
-    /* Reveal all ad containers */
-    document.querySelectorAll('.cond-ad').forEach(function(el){
-        el.style.setProperty('display','flex','important');
-    });
-
-    /* Monetag popunder — only for referred users */
-    var s = document.createElement('script');
-    s.dataset.zone = '11099662';
-    s.src = 'https://al5sm.com/tag.min.js';
-    document.body.appendChild(s);
-
-    /* Social bar — delayed to not block LCP */
-    setTimeout(function(){
-        var ss = document.createElement('script');
-        ss.src = 'https://turbulentrefreshments.com/77/06/39/770639f0fa0bdcf62b6d8ceda82360d7.js';
-        document.body.appendChild(ss);
-    }, 1200);
-})();
-</script>
 
 <!-- MAIN LOGIC: set button hrefs from URL params -->
 <script>
