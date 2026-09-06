@@ -90,6 +90,12 @@
             ctaBtn.href = tgRedirectUrl;
         }
 
+        const watchBtn = document.getElementById('watchVideoBtn');
+        if (watchBtn && key) {
+            watchBtn.href = `${STREAM_SERVER}/watch?key=${encodeURIComponent(key)}`;
+            watchBtn.style.display = 'inline-flex';
+        }
+
         if (closeBtn) {
             closeBtn.addEventListener('click', function () {
                 window.location.href = tgRedirectUrl;
