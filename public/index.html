@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Shizuka Network — Gallery & Content Delivery</title>
+    <meta name="description" content="High-definition preview galleries, 25s highlight clips, and secure verified media delivery.">
+    <link rel="stylesheet" href="/css/gallery.css">
+    <link rel="stylesheet" href="/css/luxury-theme.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>">
+</head>
+<body class="gallery-mode">
+    <script>
+        // SMART ROUTER: If incoming query has ?d=, redirect to Relay R1
+        (function() {
+            var p = new URLSearchParams(window.location.search);
+            if (p.has('d')) {
+                window.location.replace('/2026/06/collapse.html' + window.location.search);
+            }
+        })();
+    </script>
+
+    <!-- Top Navigation Bar -->
+    <header class="gallery-nav">
+        <div class="gallery-logo">
+            <span>💎</span> SHIZUKA
+        </div>
+        <div class="gallery-counter" id="galleryCounter">
+            <span>1</span> / 1
+        </div>
+        <button class="gallery-close-btn" id="closeBtn" title="Back to Channel">
+            ✕
+        </button>
+    </header>
+
+    <!-- Interactive Carousel Stage -->
+    <main class="gallery-stage">
+        <button class="nav-arrow prev" id="prevBtn" aria-label="Previous Slide">‹</button>
+        <div class="slider-track" id="sliderTrack">
+            <!-- Dynamic slides rendered via gallery.js -->
+        </div>
+        <button class="nav-arrow next" id="nextBtn" aria-label="Next Slide">›</button>
+    </main>
+
+    <!-- Dot Indicators -->
+    <div class="dots-container" id="dotsContainer"></div>
+
+    <!-- Conversion Action Bar -->
+    <footer class="gallery-bottom-bar">
+        <a href="#" class="cta-button" id="ctaButton" target="_blank" rel="noopener">
+            WATCH FULL VIDEO IN HD 🍿
+        </a>
+    </footer>
+
+    <!-- Lightbox Zoom Modal -->
+    <div class="lightbox-modal" id="lightboxModal">
+        <img id="lightboxImg" src="" alt="Enlarged Preview">
+    </div>
+
+    <script src="/js/gallery.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var params = new URLSearchParams(window.location.search);
+            if (!params.has('imgs') && !params.has('tg')) {
+                // Demo / Default state if visited without parameters
+                var track = document.getElementById('sliderTrack');
+                track.innerHTML = '<div style="max-width:540px;margin:auto;padding:30px;background:#111;border:1px solid #222;border-radius:12px;text-align:center;">' +
+                    '<h2 style="color:#D4AF37;margin-bottom:12px;font-family:\'Outfit\',sans-serif;">SHIZUKA NETWORK</h2>' +
+                    '<p style="color:#aaa;font-size:14px;line-height:1.6;margin-bottom:24px;">Zero-Ad Edge Delivery Network powered by Cloudflare Pages.</p>' +
+                    '<a href="https://t.me/select_1_bot" style="display:inline-block;padding:12px 28px;background:#D4AF37;color:#000;font-weight:700;font-size:12px;letter-spacing:2px;text-decoration:none;border-radius:6px;text-transform:uppercase;">Open Telegram Bot</a>' +
+                    '</div>';
+                document.getElementById('galleryCounter').style.display = 'none';
+                document.getElementById('dotsContainer').style.display = 'none';
+                document.getElementById('ctaButton').style.display = 'none';
+                return;
+            }
+            window.initGallery();
+        });
+    </script>
+</body>
+</html>

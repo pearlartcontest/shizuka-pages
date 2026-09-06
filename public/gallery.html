@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Shizuka Preview Gallery — Ultra-HD Highlights</title>
+    <meta name="description" content="High-definition preview galleries, 25s highlight clips, and secure verified media delivery.">
+    <link rel="stylesheet" href="/css/gallery.css">
+    <link rel="stylesheet" href="/css/luxury-theme.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>">
+</head>
+<body class="gallery-mode">
+    <header class="gallery-nav">
+        <div class="gallery-logo">
+            <span>💎</span> SHIZUKA
+        </div>
+        <div class="gallery-counter" id="galleryCounter">
+            <span>1</span> / 1
+        </div>
+        <button class="gallery-close-btn" id="closeBtn" title="Back to Channel">
+            ✕
+        </button>
+    </header>
+
+    <main class="gallery-stage">
+        <button class="nav-arrow prev" id="prevBtn" aria-label="Previous Slide">‹</button>
+        <div class="slider-track" id="sliderTrack"></div>
+        <button class="nav-arrow next" id="nextBtn" aria-label="Next Slide">›</button>
+    </main>
+
+    <div class="dots-container" id="dotsContainer"></div>
+
+    <footer class="gallery-bottom-bar">
+        <a href="#" class="cta-button" id="ctaButton" target="_blank" rel="noopener">
+            WATCH FULL VIDEO IN HD 🍿
+        </a>
+    </footer>
+
+    <div class="lightbox-modal" id="lightboxModal">
+        <img id="lightboxImg" src="" alt="Enlarged Preview">
+    </div>
+
+    <script src="/js/gallery.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.initGallery();
+        });
+    </script>
+</body>
+</html>

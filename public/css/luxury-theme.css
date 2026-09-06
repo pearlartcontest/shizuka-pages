@@ -1,0 +1,352 @@
+/* ==========================================================================
+   SHIZUKA NETWORK — LUXURY BLACK & GOLD DESIGN SYSTEM
+   Zero-Ad, High-Retention Editorial Theme for Relays & Vault
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
+
+:root {
+    --gold: #D4AF37;
+    --gold-glow: rgba(212, 175, 55, 0.45);
+    --gold-dark: #8E793E;
+    --gold-dim: rgba(212, 175, 55, 0.12);
+    --gold-dimmer: rgba(212, 175, 55, 0.05);
+
+    --bg-dark: #070707;
+    --bg-surface: #0e0e0e;
+    --bg-card: #141414;
+    --border: #1e1e1e;
+    --border-gold: rgba(212, 175, 55, 0.28);
+
+    --text-main: #f0f0f0;
+    --text-body: #b8b8b8;
+    --text-muted: #666666;
+    --text-subtle: #444444;
+
+    --font-heading: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-editorial: 'Georgia', 'Playfair Display', serif;
+    --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Courier New', monospace;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background: radial-gradient(circle at 50% 0%, #151515 0%, var(--bg-dark) 70%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: var(--font-editorial);
+    color: var(--text-body);
+    line-height: 1.85;
+    overflow-x: hidden;
+}
+
+/* ── App Shell / Layout ────────────────────────────────────────────── */
+.page-wrapper {
+    width: 100%;
+    max-width: 840px;
+    padding: 48px 24px 100px;
+    margin: 0 auto;
+}
+
+/* ── Header Branding ───────────────────────────────────────────────── */
+.header-brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-ui);
+}
+
+.brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+
+.brand-badge span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--gold);
+}
+
+.brand-channel {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+
+.brand-channel a {
+    color: var(--gold);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.brand-channel a:hover {
+    opacity: 0.8;
+}
+
+/* ── Editorial Typography ──────────────────────────────────────────── */
+.article-tag {
+    color: var(--gold);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: block;
+}
+
+h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+}
+
+.byline {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.byline b {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+h2 {
+    font-family: var(--font-heading);
+    color: var(--gold);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 40px 0 16px;
+    letter-spacing: -0.2px;
+}
+
+p {
+    font-size: 16.5px;
+    color: var(--text-body);
+    margin: 20px 0;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.pull-quote {
+    border-left: 3px solid var(--gold);
+    background: var(--gold-dimmer);
+    padding: 18px 24px;
+    margin: 32px 0;
+    font-style: italic;
+    color: #e5cf8e;
+    font-size: 19px;
+    line-height: 1.6;
+    border-radius: 0 8px 8px 0;
+}
+
+.article-img {
+    width: 100%;
+    border-radius: 6px;
+    margin: 28px 0 6px;
+    border: 1px solid var(--border);
+    display: block;
+    object-fit: cover;
+    max-height: 480px;
+}
+
+.img-caption {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 26px;
+    font-family: var(--font-ui);
+    font-style: italic;
+}
+
+/* ── Action Zone / Countdown Engine ────────────────────────────────── */
+.action-zone {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-gold);
+    border-radius: 12px;
+    padding: 28px 24px;
+    margin: 36px 0;
+    text-align: center;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+    position: relative;
+    overflow: hidden;
+}
+
+.action-zone::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.phase-label {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.phase-label span.countdown-number {
+    color: var(--gold);
+    font-family: var(--font-mono);
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.bar-track {
+    width: 100%;
+    max-width: 380px;
+    height: 4px;
+    background: #181818;
+    margin: 0 auto;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+    box-shadow: 0 0 14px var(--gold-glow);
+    border-radius: 4px;
+}
+
+.btn-wrap {
+    margin: 24px 0 4px;
+}
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 48px;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s, background 0.25s;
+    user-select: none;
+}
+
+.action-btn:active {
+    transform: scale(0.98);
+}
+
+/* Phase 1 Outline Button */
+.btn-outline {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold-dark);
+}
+
+.btn-outline:hover {
+    border-color: var(--gold);
+    box-shadow: 0 0 20px var(--gold-dim);
+    transform: translateY(-1px);
+}
+
+/* Phase 2 Solid Gold Hero Button */
+.btn-solid {
+    background: var(--gold);
+    color: #000;
+    border: none;
+    box-shadow: 0 6px 28px rgba(212, 175, 55, 0.4);
+    animation: pulseGold 2.2s ease infinite;
+}
+
+.btn-solid:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 36px rgba(212, 175, 55, 0.65);
+}
+
+@keyframes pulseGold {
+    0%, 100% {
+        box-shadow: 0 6px 28px rgba(212, 175, 55, 0.35);
+    }
+    50% {
+        box-shadow: 0 8px 36px rgba(212, 175, 55, 0.65);
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────── */
+.article-footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--text-subtle);
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* ── Mobile Optimization ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+    .page-wrapper {
+        padding: 24px 16px 80px;
+    }
+    h1 {
+        font-size: 27px;
+    }
+    p {
+        font-size: 15.5px;
+        line-height: 1.75;
+    }
+    .action-zone {
+        padding: 22px 16px;
+    }
+    .action-btn {
+        width: 100%;
+        padding: 15px 20px;
+    }
+}
