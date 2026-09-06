@@ -191,42 +191,44 @@
         .dot.active { background: var(--gold); width: 50px; }
 
         .gallery-action-group {
-            display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; justify-content: center; z-index: 100;
+            display: flex; gap: 14px; margin-top: 18px; flex-wrap: wrap; justify-content: center; align-items: center; z-index: 100;
         }
-        .watch-video-btn {
-            padding: 0 24px; height: 46px; min-width: 190px;
-            background: linear-gradient(135deg, #d4af37 0%, #b89b5e 100%);
-            border: 1px solid rgba(212,175,55,0.8); border-radius: 12px;
+        .watch-video-btn, .tg-post-btn {
+            height: 48px; width: 170px; min-width: 170px; max-width: 170px;
+            box-sizing: border-box; border: none; border-radius: 12px;
             display: none; align-items: center; justify-content: center; gap: 8px;
-            cursor: pointer; color: #000000; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-            text-decoration: none;
+            cursor: pointer; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.8px; font-size: 13px;
+            white-space: nowrap; line-height: 1;
+            text-decoration: none; margin: 0; padding: 0;
             opacity: 0; animation: fadeIn 0.4s forwards; animation-delay: 0.5s;
             transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .watch-video-btn {
+            background: linear-gradient(135deg, #d4af37 0%, #b89b5e 100%);
+            color: #000000;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
         .watch-video-btn:hover {
             transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
             filter: brightness(1.08);
         }
-        .watch-video-btn svg { width: 18px; height: 18px; fill: #000; }
+        .watch-video-btn svg { width: 18px; height: 18px; fill: #000; flex-shrink: 0; }
 
         .tg-post-btn {
-            margin-top: 0; padding: 0 28px; height: 46px; min-width: 190px;
-            background: var(--tg-blue); border: none; border-radius: 12px;
-            display: none; align-items: center; justify-content: center; gap: 10px;
-            cursor: pointer; z-index: 100; color: #ffffff; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 1px; font-size: 13px;
+            background: var(--tg-blue);
+            color: #ffffff;
             box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
-            opacity: 0; animation: fadeIn 0.4s forwards; animation-delay: 0.6s;
-            transition: transform 0.2s, box-shadow 0.2s;
         }
+        .tg-post-btn:hover {
+            transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 136, 204, 0.6);
+            filter: brightness(1.08);
+        }
+        .tg-post-btn svg { width: 18px; height: 18px; fill: #fff; flex-shrink: 0; }
         @keyframes fadeIn { 
             from { opacity: 0; transform: translateY(0); } 
             to { opacity: 1; transform: translateY(0); } 
         }
-
-        .tg-post-btn svg { width: 22px; height: 22px; fill: #fff; }
 
         /* --- ZOOM SYSTEM --- */
         #zoomOverlay {
@@ -306,13 +308,20 @@
             .dots { margin-top: 14px; gap: 8px; }
             .dot { width: 18px; height: 2px; }
             .dot.active { width: 36px; }
-            .tg-post-btn {
-                margin: 14px auto 16px;
-                width: 75%;
-                max-width: 280px;
+            .gallery-action-group {
+                gap: 10px;
+                margin-top: 14px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .watch-video-btn, .tg-post-btn {
+                width: 165px;
+                min-width: 165px;
+                max-width: 165px;
                 height: 46px;
                 font-size: 12px;
                 border-radius: 12px;
+                margin: 0;
             }
             body, html { overflow-y: auto !important; overflow-x: hidden !important; height: auto; display: block; }
             .jump-button { display: flex; }
@@ -345,7 +354,7 @@
             <div class='gallery-action-group'>
                 <a class='watch-video-btn' id='watchVideoBtn' href='#' target='_blank'>
                     <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    <span>Watch Full Video HD</span>
+                    <span>Watch Now</span>
                 </a>
                 <button class='tg-post-btn' id='tgBtn' onclick='goToTelegram()'>
                     <svg class='bi bi-telegram' fill='currentColor' height='16' viewBox='0 0 16 16' width='16' xmlns='http://www.w3.org/2000/svg'>
