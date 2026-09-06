@@ -289,12 +289,12 @@
     </style>
 </head>
 <body>
+    
     <header>Shizuka:
       <h5>&quot;If images don't appear,</h5>
   		<h4>Please Refresh&quot;</h4>
   	</header>
-    <div id='zoomOverlay'>
-        <div class='zoom-close' onclick='closeZoom()'><svg viewBox='0 0 24 24'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg></div>
+    <div id='zoomOverlay'><div class='zoom-close' onclick='closeZoom()'><svg viewBox='0 0 24 24'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg></div>
         <div class='zoom-nav prev-zoom' id='zPrev'><svg height='40' viewBox='0 0 24 24' width='40'><path d='M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z'/></svg></div>
         <img draggable='false' id='zoomImg' src=''/>
         <div class='zoom-nav next-zoom' id='zNext'><svg height='40' viewBox='0 0 24 24' width='40'><path d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'/></svg></div>
@@ -304,8 +304,9 @@
             <span onclick='adjustScale(0.3)' style='cursor:pointer; color:#fff'>+</span>
         </div>
     </div>
-<!-- ======================================================================= AD Piller Left Start ======================================================================= -->
-    
+    <div class='viewer-wrapper'><div id='maskBox'>
+            <div class='slider-track' id='sliderTrack'></div>
+        </div>
         <div class='nav-hub'>
             <div class='dots' id='dots'></div>
             <button class='tg-post-btn' id='tgBtn' onclick='goToTelegram()'>
@@ -316,12 +317,10 @@
             </button>
         </div>
     </div>
-
-    
-
     <button class='jump-button' id='jumpBtn' onclick='window.scrollTo({top: 0, behavior: &quot;smooth&quot;})'>
         <svg viewBox='0 0 24 24'><path d='M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z'/></svg>
     </button>
+
 
     <script type="text/javascript">
 const urlParams = new URLSearchParams(location.search);
@@ -343,7 +342,8 @@ const urlParams = new URLSearchParams(location.search);
             .split(',')
             .filter(s => s.trim() !== "")
             .map(pair => {
-                const [id, hash] = pair.trim().split(':');
+                const [rawId, hash] = pair.trim().split(':');
+                const id = rawId ? rawId.replace(/^[^\d]+/, '') : '';
                 return hash
                     ? `${STREAM_SERVER}/img/${id}?hash=${hash}`
                     : `${STREAM_SERVER}/img/${id}`;

@@ -21,16 +21,22 @@ if not skin_match:
     sys.exit(1)
 css_content = skin_match.group(1).strip()
 
-# Extract the header, zoom overlay, viewer-wrapper, jump button
-html_body_match = re.search(r"<header>Shizuka:.*?</header>.*?<button class='jump-button'.*?</button>", s_raw, re.DOTALL)
-if not html_body_match:
-    print("ERROR: Could not find HTML body in savemyimg")
-    sys.exit(1)
-body_html = html_body_match.group(0).strip()
+# Extract the header, zoom overlay, viewer-wrapper, jump button precisely
+header_html = re.search(r"<header>.*?</header>", s_raw, re.DOTALL).group(0)
+zoom_raw = s_raw.split("<div id='zoomOverlay'>")[1].split("<!-- ======================================================================= AD Piller Left Start")[0]
+zoom_html = "<div id='zoomOverlay'>" + zoom_raw.strip()
 
-# Remove ad containers from body HTML
-body_html = re.sub(r"<div class='ad-pillar.*?</div>\s*</div>", "", body_html, flags=re.DOTALL)
-body_html = re.sub(r"<div class='ad-container-720'.*?</div>\s*</div>", "", body_html, flags=re.DOTALL)
+viewer_raw = s_raw.split("<div class='viewer-wrapper'>")[1].split("<div class='ad-container-720'>")[0]
+viewer_html = "<div class='viewer-wrapper'>" + viewer_raw.strip()
+
+jump_html = re.search(r"<button class='jump-button'.*?</button>", s_raw, re.DOTALL).group(0)
+
+body_html = f"""
+    {header_html}
+    {zoom_html}
+    {viewer_html}
+    {jump_html}
+"""
 
 # Extract JavaScript
 js_match = re.search(r"<script type='text/javascript'>\s*//<!\[CDATA\[(.*?)//\]\]>\s*</script>", s_raw, re.DOTALL)
@@ -38,6 +44,11 @@ if not js_match:
     print("ERROR: Could not find JS in savemyimg")
     sys.exit(1)
 js_content = js_match.group(1).strip()
+# Sanitize ID to cleanly handle any leading minus sign or symbols
+js_content = js_content.replace(
+    "const [id, hash] = pair.trim().split(':');",
+    "const [rawId, hash] = pair.trim().split(':');\n                const id = rawId ? rawId.replace(/^[^\\d]+/, '') : '';"
+)
 
 # Build complete clean gallery page
 gallery_html = f"""<!DOCTYPE html>
