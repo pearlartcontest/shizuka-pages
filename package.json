@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Shizuka Network Cloudflare Pages static edge deployment for img.shizuka.fun and go.shizuka.fun",
   "scripts": {
-    "build": "python build_pages.py",
-    "deploy": "wrangler pages deploy public --project-name shizuka-pages"
+    "build": "echo \"Assets ready\"",
+    "deploy": "wrangler pages deploy public"
   },
   "keywords": ["shizuka", "cloudflare-pages", "video-stream", "gallery"],
   "author": "Shizuka Network",
