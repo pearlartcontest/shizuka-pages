@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Shizuka — Official Channels</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: #000000;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Georgia', serif;
+    }
+    .container {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .brand {
+      color: #C9A84C;
+      font-size: 42px;
+      letter-spacing: 12px;
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+    .tagline {
+      color: #555555;
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+    .cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      border: 1px solid #C9A84C;
+      color: #C9A84C;
+      background: transparent;
+      text-decoration: none;
+      padding: 16px 20px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.35s ease;
+      cursor: pointer;
+      text-align: center;
+      border-radius: 4px;
+    }
+    .cta .icon {
+      width: 18px;
+      height: 18px;
+      vertical-align: middle;
+      display: inline-block;
+    }
+    .cta:hover {
+      background: #C9A84C;
+      color: #000000;
+      box-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
+      transform: translateY(-1px);
+    }
+    .cta.cta-blue {
+      border: 1px solid #0088cc;
+      color: #0088cc;
+    }
+    .cta.cta-blue:hover {
+      background: #0088cc;
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(0, 136, 204, 0.45);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brand">SHIZUKA</div>
+    <div class="tagline">Daily Hand-Curated Drops &#8226; 100% Free &#8226; Zero In-Video Ads</div>
+    <div class="btn-group">
+      <a class="cta cta-blue" href="https://t.me/+7V01BrvEcqhkNjI9" target="_blank" onclick="trackClick('EN')">
+        <img alt="US Flag" class="icon" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1fa-1f1f8.svg"/>
+        <span>WESTERN / ENGLISH</span>
+        <img alt="Popcorn" class="icon" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f37f.svg"/>
+      </a>
+      <a class="cta cta-blue" href="https://t.me/+oMTfYGgzexs4ZGRl" target="_blank" onclick="trackClick('JP')">
+        <img alt="Japan Flag" class="icon" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1ef-1f1f5.svg"/>
+        <span>JAPANESE / ASIAN</span>
+        <img alt="Sakura" class="icon" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f338.svg"/>
+      </a>
+      <a class="cta" href="https://t.me/+HXyrh9_kfog3ODA1" id="watchBtn" onclick="trackClick('BOTH')">
+        <span>JOIN BOTH</span>
+        <img alt="Party" class="icon" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f389.svg"/>
+      </a>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+  (function(){
+    var STREAM_SERVER = 'https://shizuka.fun';
+    try{
+      (navigator.sendBeacon||(function(u){fetch(u,{keepalive:true})}))
+        (STREAM_SERVER+'/analytics/traffic?source=IG&action=view');
+    }catch(e){}
+    window.trackClick = function(channel){
+      try{
+        (navigator.sendBeacon||(function(u){fetch(u,{keepalive:true})}))
+          (STREAM_SERVER+'/analytics/traffic?source=IG&action=click&channel=' + channel);
+      }catch(e){}
+    };
+  })();
+  </script>
+</body>
+</html>
