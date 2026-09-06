@@ -62,10 +62,10 @@ gallery_html = f"""<!DOCTYPE html>
         (function() {{
             var host = window.location.hostname;
             var path = window.location.pathname;
-            if (host === 'join.shizuka.fun' && (path === '/' || path === '/index.html')) {{
-                window.location.replace('/join.html' + window.location.search);
-            }} else if (host === 'go.shizuka.fun' && (path === '/' || path === '/index.html')) {{
-                window.location.replace('/vault.html' + window.location.search);
+            if (host === 'join.shizuka.fun' && (path === '/' || path === '/index.html' || path === '/index')) {{
+                window.location.replace('/join' + window.location.search);
+            }} else if (host === 'go.shizuka.fun' && (path === '/' || path === '/index.html' || path === '/index')) {{
+                window.location.replace('/vault' + window.location.search);
             }}
         }})();
     </script>
