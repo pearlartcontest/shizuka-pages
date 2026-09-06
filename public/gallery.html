@@ -5,8 +5,6 @@
     <title>SHIZUKA | Images</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- ExoClick NeverBlock Anti-Adblock Loader -->
-    <script type="text/javascript" src="https://shizuka.fun/assets/js/exoloader.js"></script>
     <script>
         (function() {
             var host = window.location.hostname;
@@ -30,28 +28,8 @@
             margin: 0; padding: 0;
             background-color: var(--bg-color) !important;
             color: #ffffff; font-family: 'Inter', sans-serif;
-            overflow-y: auto !important;
-            overflow-x: hidden !important;
-            min-height: 100vh;
+            overflow: hidden; height: 100vh;
             display: flex; flex-direction: column;
-        }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-color); }
-        ::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
-
-        .gallery-native-ad-wrap {
-            width: 100%;
-            max-width: 960px;
-            margin: 24px auto 32px;
-            padding: 0 16px;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100px;
-            z-index: 100;
         }
 
         #mandatory-section { display: none !important; }
@@ -384,34 +362,6 @@
                     <span>Back to Post</span>
                 </button>
             </div>
-
-            <!-- Native Recommendation Ad Widget (Zone 6021036) -->
-            <div class="gallery-native-ad-wrap" id="galleryNativeAdWrap">
-                <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
-                <ins class="eas6a97888e20" data-zoneid="6021036"></ins> 
-                <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
-            </div>
-
-            <!-- ExoClick NeverBlock Anti-Adblock Engine Fallback -->
-            <script type="text/javascript">
-              (function() {
-                try {
-                  var myEl = { el: null };
-                  try {
-                    var evt = new CustomEvent("getexoloader", { detail: myEl });
-                    window.document.dispatchEvent(evt);
-                  } catch(e) {}
-                  var nb = myEl.el || window.ExoLoader;
-                  if (nb) {
-                    var adBox = document.getElementById("galleryNativeAdWrap");
-                    if (adBox) {
-                      nb.addZone({ "idzone": "6021036", "container": adBox });
-                      nb.serve({ "script_url": "https://shizuka.fun/api/nb/serve.js", "no_cookie": true, "force": true });
-                    }
-                  }
-                } catch(err) {}
-              })();
-            </script>
         </div>
     </div>
     <button class='jump-button' id='jumpBtn' onclick='window.scrollTo({top: 0, behavior: &quot;smooth&quot;})'>
