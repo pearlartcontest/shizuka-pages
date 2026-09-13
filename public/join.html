@@ -109,15 +109,18 @@
   <script type="text/javascript">
   (function(){
     var STREAM_SERVER = 'https://shizuka.fun';
-    try{
-      (navigator.sendBeacon||(function(u){fetch(u,{keepalive:true})}))
-        (STREAM_SERVER+'/analytics/traffic?source=IG&action=view');
-    }catch(e){}
+    // sendBeacon must be called ON navigator. (navigator.sendBeacon||f)(u) detaches it and
+    // throws "Illegal invocation" in Chrome — that silently killed every hit on this page.
+    function beacon(u){
+      try{ if(navigator.sendBeacon && navigator.sendBeacon(u)) return; }catch(e){}
+      try{ fetch(u,{keepalive:true,mode:'no-cors'}); }catch(e){}
+    }
+    // Where the visitor came from: t.co = X, redgifs, reddit, instagram... 'direct' = none sent.
+    var ref = 'direct';
+    try{ if(document.referrer){ ref = new URL(document.referrer).hostname.replace(/^www\./,''); } }catch(e){}
+    beacon(STREAM_SERVER+'/analytics/traffic?source='+encodeURIComponent('join:'+ref)+'&action=view');
     window.trackClick = function(channel){
-      try{
-        (navigator.sendBeacon||(function(u){fetch(u,{keepalive:true})}))
-          (STREAM_SERVER+'/analytics/traffic?source=IG&action=click&channel=' + channel);
-      }catch(e){}
+      beacon(STREAM_SERVER+'/analytics/traffic?source='+encodeURIComponent('join_'+channel)+'&action=click');
     };
   })();
   </script>

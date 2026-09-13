@@ -380,7 +380,7 @@ const urlParams = new URLSearchParams(location.search);
         (function(){
           var _k = urlParams.get('key') || '';
           if (_k && STREAM_SERVER) {
-            try { (navigator.sendBeacon || function(u){fetch(u,{keepalive:true})})(STREAM_SERVER+'/analytics/img_view?key='+_k); } catch(e){}
+            var _u = STREAM_SERVER+'/analytics/img_view?key='+encodeURIComponent(_k); try { if (!(navigator.sendBeacon && navigator.sendBeacon(_u))) fetch(_u,{keepalive:true,mode:'no-cors'}); } catch(e){}
           }
         })();
 
