@@ -3,3 +3,6 @@
 /r3    /2026/06/squeeze.html    200
 /r4    /2026/06/sterling.html   200
 /r5    /2026/06/enron.html      200
+/watch /watch.html              200
+/play  /watch.html              200
+
